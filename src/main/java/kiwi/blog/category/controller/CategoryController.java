@@ -1,0 +1,34 @@
+package kiwi.blog.category.controller;
+
+import io.swagger.annotations.Api;
+import kiwi.blog.category.model.request.CategoriesRequest;
+import kiwi.blog.category.model.response.CategoriesResponse;
+import kiwi.blog.category.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@Api(tags = "Category", description = "카테고리")
+@RestController
+@RequestMapping("categories")
+public class CategoryController {
+
+    private final CategoryService categoryService;
+
+    @Autowired
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+    @GetMapping
+    public ResponseEntity<CategoriesResponse> getCategories(@ModelAttribute CategoriesRequest categoriesRequest) {
+
+        CategoriesResponse response = categoryService.getCategories(categoriesRequest);
+
+        return ResponseEntity.ok().body(response);
+    }
+
+}
