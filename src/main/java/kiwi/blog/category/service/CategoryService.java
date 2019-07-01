@@ -18,6 +18,9 @@ public class CategoryService {
 
     public CategoriesResponse getCategories(CategoriesRequest categoriesRequest) {
 
+        categoryRepository.selectCategories(categoriesRequest);
+
+
         return null;
     }
 }

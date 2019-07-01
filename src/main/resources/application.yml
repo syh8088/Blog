@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8082
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/your-blog?useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kiwi_blog?autoReconnect=true&serverTimezone=UTC
     username: root
     password: password
   thymeleaf:
