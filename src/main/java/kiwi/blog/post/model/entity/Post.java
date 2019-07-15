@@ -24,5 +24,4 @@ public class Post extends Common {
 
     private Long viewCount;
 
-
 }

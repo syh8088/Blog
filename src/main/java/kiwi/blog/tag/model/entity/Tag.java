@@ -1,4 +1,4 @@
-package kiwi.blog.tag.model;
+package kiwi.blog.tag.model.entity;
 
 import kiwi.blog.common.model.entity.Common;
 import lombok.Getter;

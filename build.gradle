@@ -20,6 +20,11 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+querydsl {
+    querydslDefault = true
+    jpa = true
+}
+
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'

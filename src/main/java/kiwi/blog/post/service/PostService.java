@@ -1,8 +1,15 @@
 package kiwi.blog.post.service;
 
+import kiwi.blog.common.utils.BeanUtils;
+import kiwi.blog.post.model.entity.Post;
+import kiwi.blog.post.model.request.PostsRequest;
+import kiwi.blog.post.model.response.PostResponse;
+import kiwi.blog.post.model.response.PostsResponse;
 import kiwi.blog.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PostService {
@@ -12,5 +19,39 @@ public class PostService {
     @Autowired
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
+    }
+
+    public PostsResponse getPosts(PostsRequest postsRequest) {
+
+        PostsResponse postsResponse = new PostsResponse();
+
+        List<Post> posts = postRepository.selectPosts(postsRequest);
+        long countPosts = postRepository.selectCountPosts(postsRequest);
+
+        List<PostResponse> postResponses = BeanUtils.copyProperties(posts, PostResponse.class);
+
+        int totalPages = (int) (countPosts / postsRequest.getLimit());
+        if (countPosts % postsRequest.getLimit() > 0)
+            totalPages = totalPages + 1;
+
+        postsResponse.setContent(postResponses);
+        postsResponse.setSize(postsRequest.getLimit());
+        postsResponse.setTotalPages(totalPages);
+        postsResponse.setNumber(postsRequest.getOffset());
+        postsResponse.setTotalElements(countPosts);
+
+        return postsResponse;
+    }
+
+    public PostResponse getPost(long postNo) {
+        Post post = postRepository.findByPostNoAndUseYn(postNo, true);
+
+        if (post == null) {
+            return null;
+        }
+
+        PostResponse postResponse = BeanUtils.copyProperties(post, PostResponse.class);
+
+        return postResponse;
     }
 }
