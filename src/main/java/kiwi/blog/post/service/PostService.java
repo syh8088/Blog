@@ -7,15 +7,11 @@ import kiwi.blog.post.model.request.SavePostRequest;
 import kiwi.blog.post.model.response.PostResponse;
 import kiwi.blog.post.model.response.PostsResponse;
 import kiwi.blog.post.repository.PostRepository;
-import kiwi.blog.tag.model.entity.Tag;
-import kiwi.blog.tag.model.request.TagRequest;
 import kiwi.blog.tag.service.TagService;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService {
