@@ -3,6 +3,7 @@ package kiwi.blog.post.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kiwi.blog.post.model.request.PostsRequest;
+import kiwi.blog.post.model.request.SavePostRequest;
 import kiwi.blog.post.model.response.PostResponse;
 import kiwi.blog.post.model.response.PostsResponse;
 import kiwi.blog.post.service.PostService;
@@ -32,8 +33,18 @@ public class PostController {
     @GetMapping("{postNo}")
     @ApiOperation(value = "포스트 상세 조회", notes = "포스트를 조회합니다.")
     public ResponseEntity<PostResponse> getPost(@PathVariable long postNo) {
+
         PostResponse postResponse = postService.getPost(postNo);
 
         return (postResponse == null) ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(postResponse);
+    }
+
+    @PostMapping("posts")
+    @ApiOperation(value = "포스트 저장", notes = "포스트를 저장합니다")
+    public ResponseEntity<?> savePost(@RequestBody SavePostRequest savePostRequest) {
+
+        postService.savePost(savePostRequest);
+
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,13 +1,12 @@
 package kiwi.blog.post.model.entity;
 
 import kiwi.blog.common.model.entity.Common;
+import kiwi.blog.tag.model.entity.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,4 +23,7 @@ public class Post extends Common {
 
     private Long viewCount;
 
+    @ManyToMany
+    @JoinTable(name = "post_tag_mapping", joinColumns = @JoinColumn(name = "post_no"), inverseJoinColumns = @JoinColumn(name = "tag_no"))
+    private List<Tag> tags;
 }

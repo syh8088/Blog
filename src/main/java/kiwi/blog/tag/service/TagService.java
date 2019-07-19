@@ -44,14 +44,22 @@ public class TagService {
         return JacksonUtils.toForceModel(cachedTags, TagsResponse.class);
     }
 
+    public List<Tag> getTags(List<TagRequest> tagRequests) {
+
+        return tagRepository.findByNameIn(tagRequests
+                .stream()
+                .map(TagRequest::getName)
+                .collect(Collectors.toList()));
+    }
+
     @Transactional
     public List<Tag> saveTags(List<TagRequest> tagRequests) {
 
         List<Tag> originTags = tagRepository
                 .findByNameIn(tagRequests.stream()
-                        .map(tagRequest -> tagRequest.getName().trim())
-                        .filter(tagName -> tagName.length() > 0)
-                        .collect(Collectors.toList()));
+                .map(tagRequest -> tagRequest.getName().trim())
+                .filter(tagName -> tagName.length() > 0)
+                .collect(Collectors.toList()));
 
 
         return tagRepository.saveAll(tagRequests.stream()
