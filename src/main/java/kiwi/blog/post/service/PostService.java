@@ -10,6 +10,7 @@ import kiwi.blog.post.repository.PostRepository;
 import kiwi.blog.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class PostService {
             totalPages = totalPages + 1;
 
         postsResponse.setContent(postResponses);
-        postsResponse.setSize(postsRequest.getLimit());
+        postsResponse.setSize(postResponses.size());
         postsResponse.setTotalPages(totalPages);
         postsResponse.setNumber(postsRequest.getOffset());
         postsResponse.setTotalElements(countPosts);
@@ -76,5 +77,10 @@ public class PostService {
         post.setTags(tagService.getTags(savePostRequest.getTags()));
 
         postRepository.save(post);
+    }
+
+    @Transactional
+    public long moveCategory(long previousCategoryNo, long destinationCategoryNo) {
+        return postRepository.updateCategory(previousCategoryNo, destinationCategoryNo);
     }
 }

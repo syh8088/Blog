@@ -22,8 +22,8 @@ public class Category extends Common {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_no")
-    private Category parent;
+    private Category parentCategory;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Category> children;
+    @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Category> childrenCategory;
 }

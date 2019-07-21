@@ -53,7 +53,7 @@ public class TagService {
     }
 
     @Transactional
-    public List<Tag> saveTags(List<TagRequest> tagRequests) {
+    public void saveTags(List<TagRequest> tagRequests) {
 
         List<Tag> originTags = tagRepository
                 .findByNameIn(tagRequests.stream()
@@ -62,7 +62,7 @@ public class TagService {
                 .collect(Collectors.toList()));
 
 
-        return tagRepository.saveAll(tagRequests.stream()
+        tagRepository.saveAll(tagRequests.stream()
                 .filter(tagRequest ->
                         originTags.stream()
                                 .noneMatch(originTag -> originTag.getName().trim().equals(tagRequest.getName().trim()))

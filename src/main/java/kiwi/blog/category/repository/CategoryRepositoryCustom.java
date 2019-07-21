@@ -8,4 +8,5 @@ import java.util.List;
 public interface CategoryRepositoryCustom {
 
     List<Category> selectCategories(CategoriesRequest categoriesRequest);
+    long selectCountCategories(CategoriesRequest categoriesRequest);
 }

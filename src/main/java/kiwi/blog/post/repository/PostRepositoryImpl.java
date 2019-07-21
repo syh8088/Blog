@@ -27,15 +27,15 @@ public class PostRepositoryImpl extends QuerydslRepositorySupport implements Pos
     @Override
     public List<Post> selectPosts(PostsRequest postsRequest) {
 
-        JPQLQuery<Post> query = selectPostJPQLQuery(postsRequest);
+        JPQLQuery<Post> postJPQLQuery = selectPostJPQLQuery(postsRequest);
 
         if (postsRequest.getOffset() != null && postsRequest.getLimit() != null) {
-            query
+            postJPQLQuery
                     .limit(postsRequest.getLimit())
                     .offset((postsRequest.getOffset() - 1) * postsRequest.getLimit());
         }
 
-        return query.fetch();
+        return postJPQLQuery.fetch();
     }
 
     @Override
@@ -46,12 +46,21 @@ public class PostRepositoryImpl extends QuerydslRepositorySupport implements Pos
     }
 
     private JPQLQuery<Post> selectPostJPQLQuery(PostsRequest postsRequest) {
-        BooleanBuilder condition = new BooleanBuilder();
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (Strings.isNotEmpty(postsRequest.getTitle())) {
-            condition.and(qPost.title.like("%" + postsRequest.getTitle() + "%"));
+            booleanBuilder.and(qPost.title.like("%" + postsRequest.getTitle() + "%"));
         }
 
-        return from(qPost).where(condition);
+        return from(qPost).where(booleanBuilder);
     }
+
+    @Override
+    public long updateCategory(long previousCategoryNo, long destinationCategoryNo) {
+        return update(qPost)
+                .set(qPost.category.categoryNo, destinationCategoryNo)
+                .where(qPost.category.categoryNo.eq(previousCategoryNo))
+                .execute();
+    }
+
 }

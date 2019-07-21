@@ -8,4 +8,5 @@ import java.util.List;
 public interface PostRepositoryCustom {
     List<Post> selectPosts(PostsRequest postsRequest);
     long selectCountPosts(PostsRequest postsRequest);
+    long updateCategory(long previousCategoryNo, long destinationCategoryNo);
 }
