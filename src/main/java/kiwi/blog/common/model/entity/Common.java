@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Common {
 
     @Type(type = "yes_no")
-    private Boolean useYn = false;
+    private Boolean useYn = true;
 
     @CreatedDate
     private LocalDateTime createdAt;

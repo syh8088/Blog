@@ -8,7 +8,12 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long>, CategoryRepositoryCustom {
+
+    @Modifying
+    @Query("update Category c set c.useYn = 'N'")
+    int removeCategories();
+
     @Modifying
     @Query("update Category c set c.useYn = 'N' where c.categoryNo in ?1")
-    int removeCategories(Long[] categoryNos);
+    int removeCategoriesByCategoryNos(Long[] categoryNos);
 }

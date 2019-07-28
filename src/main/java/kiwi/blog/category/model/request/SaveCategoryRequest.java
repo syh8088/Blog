@@ -20,5 +20,5 @@ public class SaveCategoryRequest {
     private long displayOrder;
 
     @ApiModelProperty(value = "하위 카테고리", position = 40)
-    private List<SaveCategoryRequest> childrenCategoryRequests;
+    private List<SaveCategoryRequest> children;
 }

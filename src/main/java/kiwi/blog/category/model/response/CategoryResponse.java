@@ -17,7 +17,7 @@ public class CategoryResponse {
     private String name;
 
     @ApiModelProperty(value = "자식 카테고리", position = 30)
-    private List<CategoryResponse> childrenCategoryResponses;
+    private List<CategoryResponse> children;
 
     @ApiModelProperty(value = "전시 순서", position = 40)
     private long displayOrder;

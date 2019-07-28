@@ -39,18 +39,12 @@ public class CategoryService {
 
         List<CategoryResponse> categoryResponses = categories
                 .stream()
+                .filter(category -> category.getUseYn().equals(true))
                 .map(this::copyCategoryEntityToResponse)
                 .collect(Collectors.toList());
 
-        int totalPages = (int) (countCategories / categoriesRequest.getLimit());
-        if (countCategories % categoriesRequest.getLimit() > 0)
-            totalPages = totalPages + 1;
-
-        categoriesResponse.setContent(categoryResponses);
-        categoriesResponse.setSize(categoryResponses.size());
-        categoriesResponse.setTotalPages(totalPages);
-        categoriesResponse.setNumber(categoriesRequest.getOffset());
-        categoriesResponse.setTotalElements(countCategories);
+        categoriesResponse.setCategoryResponses(categoryResponses);
+        categoriesResponse.setTotalCount(countCategories);
 
         return categoriesResponse;
     }
@@ -63,11 +57,13 @@ public class CategoryService {
         List<Category> childCategories = category.getChildrenCategory();
         if (childCategories != null) {
             childCategories.forEach(subCategory -> {
-                CategoryResponse categoryResponse = copyCategoryEntityToResponse(subCategory);
-                childrenCategoryResponses.add(categoryResponse);
+                if (subCategory.getUseYn().equals(true)) {
+                    CategoryResponse categoryResponse = copyCategoryEntityToResponse(subCategory);
+                    childrenCategoryResponses.add(categoryResponse);
+                }
             });
         }
-        parentCategoryResponse.setChildrenCategoryResponses(childrenCategoryResponses);
+        parentCategoryResponse.setChildren(childrenCategoryResponses);
 
         return parentCategoryResponse;
     }
@@ -84,6 +80,8 @@ public class CategoryService {
     @Transactional
     public List<Category> saveCategories(SaveCategoryRequests saveCategoryRequests) {
 
+        categoryRepository.removeCategories();
+
         if (saveCategoryRequests.getMoveCategoryNos() != null && saveCategoryRequests.getMoveCategoryNos().length > 0) {
             Arrays.stream(saveCategoryRequests.getMoveCategoryNos()).forEach(moveCategory ->
                postService.moveCategory(moveCategory.getPreviousCategoryNo(), moveCategory.getDestinationCategoryNo())
@@ -91,7 +89,7 @@ public class CategoryService {
         }
 
         if (saveCategoryRequests.getRemovedCategoryNos() != null && saveCategoryRequests.getRemovedCategoryNos().length > 0) {
-            categoryRepository.removeCategories(saveCategoryRequests.getRemovedCategoryNos());
+            categoryRepository.removeCategoriesByCategoryNos(saveCategoryRequests.getRemovedCategoryNos());
         }
 
        return saveCategoryRequests.getCategoryRequests()
@@ -106,6 +104,7 @@ public class CategoryService {
 
         if (saveCategoryRequest.getCategoryNo() != 0) {
             category = categoryRepository.findById(saveCategoryRequest.getCategoryNo()).get();
+            category.setUseYn(true);
 
             BeanUtils.copyProperties(saveCategoryRequest, category);
         } else {
@@ -117,7 +116,7 @@ public class CategoryService {
         }
 
         List<Category> childrenCategories = new ArrayList<>();
-        List<SaveCategoryRequest> childCategoryRequests = saveCategoryRequest.getChildrenCategoryRequests();
+        List<SaveCategoryRequest> childCategoryRequests = saveCategoryRequest.getChildren();
         if (childCategoryRequests != null) {
             childCategoryRequests.forEach(childRequest -> {
                 Category childCategory = copyCategoryRequestToEntity(childRequest, false);
