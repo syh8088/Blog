@@ -22,12 +22,13 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final PostService postService;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, PostService postService) {
+    private PostService postService;
+
+    @Autowired
+    public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.postService = postService;
     }
 
     public CategoriesResponse getCategories(CategoriesRequest categoriesRequest) {
@@ -49,7 +50,7 @@ public class CategoryService {
         return categoriesResponse;
     }
 
-    private CategoryResponse copyCategoryEntityToResponse(Category category) {
+    public CategoryResponse copyCategoryEntityToResponse(Category category) {
 
         CategoryResponse parentCategoryResponse = BeanUtils.copyNullableProperties(category, CategoryResponse.class);
 

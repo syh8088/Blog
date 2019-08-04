@@ -18,7 +18,7 @@ public class SavePostRequest {
     private String title;
 
     @ApiModelProperty(value = "본문", required = true, position = 15)
-    private String body;
+    private String content;
 
     @ApiModelProperty(value = "카테고리 번호", position = 25)
     private long categoryNo;

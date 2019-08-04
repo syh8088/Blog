@@ -39,7 +39,7 @@ public class PostController {
         return (postResponse == null) ? ResponseEntity.noContent().build() : ResponseEntity.ok().body(postResponse);
     }
 
-    @PostMapping("posts")
+    @PostMapping()
     @ApiOperation(value = "포스트 저장", notes = "포스트를 저장합니다")
     public ResponseEntity<?> savePost(@RequestBody SavePostRequest savePostRequest) {
 

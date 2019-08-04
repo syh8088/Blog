@@ -1,5 +1,6 @@
 package kiwi.blog.post.service;
 
+import kiwi.blog.category.service.CategoryService;
 import kiwi.blog.common.utils.BeanUtils;
 import kiwi.blog.post.model.entity.Post;
 import kiwi.blog.post.model.request.PostsRequest;
@@ -7,6 +8,7 @@ import kiwi.blog.post.model.request.SavePostRequest;
 import kiwi.blog.post.model.response.PostResponse;
 import kiwi.blog.post.model.response.PostsResponse;
 import kiwi.blog.post.repository.PostRepository;
+import kiwi.blog.tag.model.response.TagResponse;
 import kiwi.blog.tag.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final TagService tagService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Autowired
     public PostService(PostRepository postRepository, TagService tagService) {
@@ -35,11 +40,21 @@ public class PostService {
 
         List<PostResponse> postResponses = BeanUtils.copyProperties(posts, PostResponse.class);
 
+        postResponses.forEach(postResponse -> {
+            postResponse.setTags(BeanUtils.copyProperties(postResponse.getTags(), TagResponse.class));
+            postResponse.setCategory(categoryService.copyCategoryEntityToResponse(
+                    posts.stream()
+                            .filter(p -> p.getPostNo() == postResponse.getPostNo())
+                            .findAny()
+                            .get()
+                            .getCategory()));
+        });
+
         int totalPages = (int) (countPosts / postsRequest.getLimit());
         if (countPosts % postsRequest.getLimit() > 0)
             totalPages = totalPages + 1;
 
-        postsResponse.setContent(postResponses);
+        postsResponse.setPostResponses(postResponses);
         postsResponse.setSize(postResponses.size());
         postsResponse.setTotalPages(totalPages);
         postsResponse.setNumber(postsRequest.getOffset());
@@ -49,15 +64,20 @@ public class PostService {
     }
 
     public PostResponse getPost(long postNo) {
+
         Post post = postRepository.findByPostNoAndUseYn(postNo, true);
 
-        if (post == null) {
-            return null;
-        }
+        if (post == null) return null;
 
-        return BeanUtils.copyProperties(post, PostResponse.class);
+        PostResponse postResponse = BeanUtils.copyProperties(post, PostResponse.class);
+
+        if (post.getTags() != null) postResponse.setTags(BeanUtils.copyProperties(post.getTags(), TagResponse.class));
+        if (post.getCategory() != null) postResponse.setCategory(categoryService.copyCategoryEntityToResponse(post.getCategory()));
+
+        return postResponse;
     }
 
+    @Transactional
     public void savePost(SavePostRequest savePostRequest) {
 
         Post post;
@@ -65,6 +85,7 @@ public class PostService {
         if (savePostRequest.getPostNo() == null || savePostRequest.getPostNo() == 0) {
 
             post = BeanUtils.copyNullableProperties(savePostRequest, Post.class);
+            post.setViewCount(0L);
         } else {
 
             post = postRepository.findById(savePostRequest.getPostNo()).get();

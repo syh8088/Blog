@@ -24,6 +24,8 @@ public class Post extends Common {
 
     private Long viewCount;
 
+    private long categoryNo;
+
     @ManyToOne
     @JoinColumn(name = "categoryNo", insertable = false, updatable = false)
     private Category category;

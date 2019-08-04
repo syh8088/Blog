@@ -1,10 +1,13 @@
 package kiwi.blog.post.model.response;
 
 import io.swagger.annotations.ApiModelProperty;
+import kiwi.blog.category.model.response.CategoryResponse;
+import kiwi.blog.tag.model.response.TagResponse;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,10 +27,16 @@ public class PostResponse {
     @ApiModelProperty(value = "사용 여부", position = 50)
     private boolean useYn;
 
-    @ApiModelProperty(value = "등록일", position = 60)
+    @ApiModelProperty(value = "카테고리", position = 60)
+    private CategoryResponse category;
+
+    @ApiModelProperty(value = "태그", position = 70)
+    private List<TagResponse> tags;
+
+    @ApiModelProperty(value = "등록일", position = 80)
     private LocalDateTime createdAt;
 
-    @ApiModelProperty(value = "수정일", position = 70)
+    @ApiModelProperty(value = "수정일", position = 90)
     private LocalDateTime updatedAt;
 
 
