@@ -48,6 +48,10 @@ public class PostRepositoryImpl extends QuerydslRepositorySupport implements Pos
     private JPQLQuery<Post> selectPostJPQLQuery(PostsRequest postsRequest) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
+        if (postsRequest.getCategoryNo() != null && postsRequest.getCategoryNo() != 0) {
+            booleanBuilder.and(qPost.category.categoryNo.eq(postsRequest.getCategoryNo()));
+        }
+
         if (Strings.isNotEmpty(postsRequest.getTitle())) {
             booleanBuilder.and(qPost.title.like("%" + postsRequest.getTitle() + "%"));
         }

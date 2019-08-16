@@ -15,4 +15,6 @@ public class PostsRequest extends CommonRequest {
     @ApiModelProperty(value = "태그", position = 20)
     private String[] tags;
 
+    @ApiModelProperty(value = "카테고리 번호", position = 30)
+    private Long categoryNo;
 }
