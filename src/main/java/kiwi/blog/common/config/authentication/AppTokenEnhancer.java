@@ -18,7 +18,7 @@ public class AppTokenEnhancer implements TokenEnhancer {
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 	    System.out.println("----------enhance------");
-		final AppUserDetails user = (AppUserDetails) authentication.getPrincipal();
+		final AppUserPrincipal user = (AppUserPrincipal) authentication.getPrincipal();
         
 		final Map<String, Object> additionalInfo = new HashMap<>(); 
 	    additionalInfo.put("roles", user.getAuthorities());

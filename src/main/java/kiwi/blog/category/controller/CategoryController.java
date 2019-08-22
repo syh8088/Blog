@@ -9,7 +9,13 @@ import kiwi.blog.category.model.response.CategoryResponse;
 import kiwi.blog.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Api(tags = "Category", description = "카테고리")
 @RestController
@@ -23,8 +29,12 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @GetMapping
-    public ResponseEntity<CategoriesResponse> getCategories(@ModelAttribute CategoriesRequest categoriesRequest) {
+    public ResponseEntity<CategoriesResponse> getCategories(@ModelAttribute CategoriesRequest categoriesRequest, @AuthenticationPrincipal OAuth2Authentication auth) {
+
+        Map user = (Map) ((OAuth2AuthenticationDetails) auth.getDetails()).getDecodedDetails();
+        long memberNo = Long.valueOf(String.valueOf(user.get("member_seq")));
 
         CategoriesResponse response = categoryService.getCategories(categoriesRequest);
 

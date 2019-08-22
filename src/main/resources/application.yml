@@ -23,5 +23,12 @@ spring:
       hibernate:
         format_sql: true
 
+app:
+  oauth:
+    jwt:
+      public-key: test
+
+      expirationInMs: 604800000
+
 environments:
   server-url: http://127.0.0.1

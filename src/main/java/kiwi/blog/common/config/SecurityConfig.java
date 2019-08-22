@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,20 +21,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(customAuthenticationProvider);
+    }
+
+    @Override
     protected void configure(final HttpSecurity http) throws Exception {
 
         http
                 .csrf().disable()
-                //.addFilterBefore(authenticationFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(authenticationFilter(), BasicAuthenticationFilter.class)
                 .requiresChannel().anyRequest().requiresSecure()
                 .and()
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .authorizeRequests()
                 .antMatchers( "/oauth/token").permitAll()
-                .antMatchers("/tokens").permitAll()
-                .and()
-                .csrf().disable();
+                .antMatchers("/tokens").permitAll();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter authenticationFilter() {
+        return new JwtAuthenticationFilter();
     }
 /*
 
@@ -46,12 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers( "/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**", "/h2-console/**", "/oauth/token", "/actuator/**");
     }
 */
-
-    @Autowired
-    public void globalUserDetails(final AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(customAuthenticationProvider);
-    }
-
 
     /**
      * 需要配置这个支持password模式

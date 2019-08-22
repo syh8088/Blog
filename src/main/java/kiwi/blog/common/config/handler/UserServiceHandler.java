@@ -1,6 +1,6 @@
 package kiwi.blog.common.config.handler;
 
-import kiwi.blog.common.config.authentication.AppUserDetails;
+import kiwi.blog.common.config.authentication.AppUserPrincipal;
 import kiwi.blog.member.model.entity.Member;
 import kiwi.blog.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class UserServiceHandler implements UserDetailsService {
 
         List<SimpleGrantedAuthority> grants = member.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 
-        AppUserDetails userDetail = new AppUserDetails();
+        AppUserPrincipal userDetail = new AppUserPrincipal();
 
         userDetail.setUsername(member.getId());
         userDetail.setPassword(member.getPassword());

@@ -1,6 +1,5 @@
-package kiwi.blog.common.config.handler;
+package kiwi.blog.common.config.authentication;
 
-import kiwi.blog.common.config.authentication.AppTokenEnhancer;
 import kiwi.blog.common.config.converter.CustomAccessTokenConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
