@@ -33,7 +33,13 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     compile 'com.querydsl:querydsl-jpa:4.2.1'
-    runtime 'mysql:mysql-connector-java'
+
+    // java.sql.SQLNonTransientConnectionException : CLIENT_PLUGIN_AUTH가 필요합니다
+    //  MYSQL 드라이버가 사용 되었기 때문입니다. mysql-connector-java- 버전이 현재 Mysql 버전에 비해 너무 높습니다 ...
+    //  5.x로 다운 그레이드
+    //  Http://mvnrepository.com/artifact/mysql/mysql-connector-java
+    // runtime 'mysql:mysql-connector-java'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.21'
 
     compile "org.springframework.boot:spring-boot-starter-security"
     compile group: 'org.springframework.security.oauth', name: 'spring-security-oauth2', version: '2.3.6.RELEASE'

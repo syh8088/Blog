@@ -1,6 +1,7 @@
 package kiwi.blog.common.enums;
 
-public enum  OauthType {
+public enum OauthType {
+    NONE("none"),
     NAVER("naver"),
     GOOGLE("google");
 

@@ -32,9 +32,7 @@ public class UserServiceHandler implements UserDetailsService {
             throw new UsernameNotFoundException("unsername not found");
         }
 
-        //List<GrantedAuthority> grants = member.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
         List<SimpleGrantedAuthority> grants = member.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-
 
         AppUserDetails userDetail = new AppUserDetails();
 
@@ -45,6 +43,5 @@ public class UserServiceHandler implements UserDetailsService {
 
         userDetail.setAuthorities(grants);
         return userDetail;
-        // return new User(member.getId(), member.getPassword(), grants);
     }
 }
