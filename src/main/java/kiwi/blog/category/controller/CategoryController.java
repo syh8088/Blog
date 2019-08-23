@@ -7,15 +7,16 @@ import kiwi.blog.category.model.request.SaveCategoryRequests;
 import kiwi.blog.category.model.response.CategoriesResponse;
 import kiwi.blog.category.model.response.CategoryResponse;
 import kiwi.blog.category.service.CategoryService;
+import kiwi.blog.common.config.authentication.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.io.IOException;
+import java.util.HashMap;
 
 @Api(tags = "Category", description = "카테고리")
 @RestController
@@ -23,18 +24,19 @@ import java.util.Map;
 public class CategoryController {
 
     private final CategoryService categoryService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, JwtTokenProvider jwtTokenProvider) {
         this.categoryService = categoryService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @PreAuthorize("hasRole('sdvsdvsdv')")
+    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
     @GetMapping
-    public ResponseEntity<CategoriesResponse> getCategories(@ModelAttribute CategoriesRequest categoriesRequest, @AuthenticationPrincipal OAuth2Authentication auth) {
+    public ResponseEntity<CategoriesResponse> getCategories(@ModelAttribute CategoriesRequest categoriesRequest, @AuthenticationPrincipal OAuth2Authentication auth) throws IOException {
 
-        Map user = (Map) ((OAuth2AuthenticationDetails) auth.getDetails()).getDecodedDetails();
-        long memberNo = Long.valueOf(String.valueOf(user.get("member_seq")));
+        HashMap jwtMap = jwtTokenProvider.getJwtTokenByClientCredentialForUser(auth);
 
         CategoriesResponse response = categoryService.getCategories(categoriesRequest);
 
