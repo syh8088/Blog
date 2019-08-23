@@ -29,7 +29,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PreAuthorize("hasRole('ROLE_SUPER_ADMIN')")
+    @PreAuthorize("hasRole('sdvsdvsdv')")
     @GetMapping
     public ResponseEntity<CategoriesResponse> getCategories(@ModelAttribute CategoriesRequest categoriesRequest, @AuthenticationPrincipal OAuth2Authentication auth) {
 
