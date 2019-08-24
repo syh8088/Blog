@@ -26,7 +26,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private String resourceId;
 
     @Value("${app.oauth.jwt.public-key}")
-    private String publicKey;
+    private String jwtPublicKey;
 
     private static final String ROOT_PATTERN = "/**";
 
@@ -39,7 +39,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         //converter.setSigningKey("secret");
-        converter.setVerifierKey(publicKey);
+        converter.setVerifierKey(jwtPublicKey);
         return converter;
     }
 
@@ -53,20 +53,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     }
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {/*
-        http.authorizeRequests()
-                .antMatchers("/oauth/token/**").authenticated();
-
-*//*
+    public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, ROOT_PATTERN).access("#oauth2.hasScope('read')")
                 .antMatchers(HttpMethod.POST, ROOT_PATTERN).access("#oauth2.hasScope('write')")
                 .antMatchers(HttpMethod.PATCH, ROOT_PATTERN).access("#oauth2.hasScope('write')")
                 .antMatchers(HttpMethod.PUT, ROOT_PATTERN).access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.DELETE, ROOT_PATTERN).access("#oauth2.hasScope('write')");*/
-
-        http.authorizeRequests()
-                .antMatchers("/api/**").hasRole("USER");
+                .antMatchers(HttpMethod.DELETE, ROOT_PATTERN).access("#oauth2.hasScope('write')");
     }
 
     @Override
