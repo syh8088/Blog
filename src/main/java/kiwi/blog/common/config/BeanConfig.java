@@ -1,3 +1,4 @@
+/*
 package kiwi.blog.common.config;
 
 import org.springframework.context.annotation.Bean;
@@ -14,3 +15,4 @@ public class BeanConfig {
 	}
 
 }
+*/

@@ -1,5 +1,6 @@
 package kiwi.blog.member.model.entity;
 
+import kiwi.blog.common.annotation.Encrypt;
 import kiwi.blog.common.enums.OauthType;
 import kiwi.blog.common.model.entity.Common;
 import kiwi.blog.role.model.entity.Role;
@@ -21,9 +22,12 @@ public class Member extends Common {
 
     private String id;
 
+    @Encrypt
     private String password;
 
     private String name;
+
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private OauthType oauthType;

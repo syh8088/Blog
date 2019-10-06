@@ -1,3 +1,4 @@
+/*
 package kiwi.blog.common.config.authentication;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -127,3 +128,4 @@ public class AppUserPrincipal implements UserDetails {
 		this.enabled = enabled;
 	}
 }
+*/

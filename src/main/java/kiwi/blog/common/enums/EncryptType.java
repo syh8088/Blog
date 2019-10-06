@@ -3,9 +3,9 @@ package kiwi.blog.common.enums;
 public enum EncryptType {
     PASSWORD("PASSWORD");
 
-    private String value;
+    private String password;
 
-    EncryptType(String value) {
-        this.value = value;
+    EncryptType(String password) {
+        this.password = password;
     }
 }
