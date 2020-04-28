@@ -1,4 +1,3 @@
-/*
 package kiwi.blog.common.config.authentication;
 
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +68,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     }
 
 
-*/
 /*
     @Override
     public void configure(final HttpSecurity http) throws Exception {
@@ -83,11 +81,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public WebResponseExceptionTranslator exceptionTranslator() {
         return new CustomRestErrorWebResponseExceptionTranslator();
     }
-*//*
 
-
-
-*/
 /*    @Override
     public void configure(HttpSecurity http) throws Exception {
         http.
@@ -96,7 +90,5 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/oauth/token/**").authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
-*//*
-
-}
 */
+}
