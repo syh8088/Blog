@@ -81,7 +81,7 @@ public class CategoryService {
     @Transactional
     public List<Category> saveCategories(SaveCategoryRequests saveCategoryRequests) {
 
-        categoryRepository.removeCategories();
+        //categoryRepository.removeCategories();
 
         if (saveCategoryRequests.getMoveCategoryNos() != null && saveCategoryRequests.getMoveCategoryNos().length > 0) {
             Arrays.stream(saveCategoryRequests.getMoveCategoryNos()).forEach(moveCategory ->
