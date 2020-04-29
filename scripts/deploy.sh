@@ -33,4 +33,4 @@ chmod +x $JAR_NAME
 
 echo "> $JAR_NAME 실행"
 
-nohup java -jar $DEPLOY_JAR &
+nohup java -jar $DEPLOY_JAR , /home/ubuntu/app/kiwi/application-real-db.properties &
