@@ -6,7 +6,8 @@ spring:
     #url: jdbc:mysql://localhost:3306/kiwi_blog?autoReconnect=true&serverTimezone=UTC
     #username: root
     #password: password
-    url: jdbc:mysql://syh80882.cafe24.com/syh80882
+    #url: jdbc:mysql://syh80882.cafe24.com/syh80882
+    url: jdbc:mysql://localhost:3306/syh80882
     driverClassName: com.mysql.jdbc.Driver
     username: syh80882
     password: abc123!@
