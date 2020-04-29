@@ -39,8 +39,8 @@ deploy:
     bucket: zeyo-build # S3 버킷
     key: kiwi-webservice.zip # S3 버킷에 저장된 kiwi-webservice.zip 파일을 EC2로 배포
     bundle_type: zip
-    application: ZEYO-REST-API-SERVICE # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
-    deployment_group: ZEYO-REST-API-SERVICE # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
+    application: ZEYO-REST-API # 웹 콘솔에서 등록한 CodeDeploy 어플리케이션
+    deployment_group: ZEYO-REST-API-GROUP # 웹 콘솔에서 등록한 CodeDeploy 배포 그룹
     region: ap-northeast-2
     wait-until-deployed: true
       #on:
