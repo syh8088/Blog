@@ -1,5 +1,5 @@
 #!/bin/bash
-BUILD_PATH=$(ls /home/ubuntu/app/kiwi/step2/zip/build/libs/*.jar)
+BUILD_PATH=$(ls /home/ubuntu/app/kiwi/step2/zip/*.jar)
 JAR_NAME=$(basename $BUILD_PATH)
 echo "> build 파일명: $JAR_NAME"
 
