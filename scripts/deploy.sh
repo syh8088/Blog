@@ -27,10 +27,10 @@ echo "> $DEPLOY_JAR 배포"
 JAR_NAME=$(ls -tr $DEPLOY_PATH*.jar | tail -n 1)
 echo "> JAR Name: $JAR_NAME
 
-echo "> $JAR_NAME 에 실행권한 추가
+echo "> $JAR_NAME 에 실행권한 추가"
 
 chmod +x $JAR_NAME
 
-echo "> $JAR_NAME 실행
+echo "> $JAR_NAME 실행"
 
 nohup java -jar $DEPLOY_JAR &
