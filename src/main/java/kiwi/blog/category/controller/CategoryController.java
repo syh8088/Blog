@@ -42,7 +42,7 @@ public class CategoryController {
     }
 
     @GetMapping("{categoryNo}")
-    @ApiOperation(value = "카테고리 조회", notes = "카테고리를 조회합니다.")
+    @ApiOperation(value = "카테고리 조회", notes = "카테고리를 조회합니다. ")
     public ResponseEntity<CategoryResponse> getCategory(@PathVariable long categoryNo) {
         CategoryResponse response = categoryService.getCategoryResponse(categoryNo);
 
