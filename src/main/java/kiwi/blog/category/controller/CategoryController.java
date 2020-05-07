@@ -54,7 +54,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    @ApiOperation(value = "카테고리 저장/수정", notes = "카테고리를 저장/수정합니다")
+    @ApiOperation(value = "카테고리 저장/수정", notes = "카테고리를 저장/수정합니다.")
     public ResponseEntity<?> saveCategories(@RequestBody SaveCategoryRequests saveCategoryRequests) {
 
         categoryService.saveCategories(saveCategoryRequests);
