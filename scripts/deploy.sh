@@ -37,5 +37,5 @@ chmod +x $JAR_NAME
 echo "> $JAR_NAME 실행"
 
 nohup java -jar \
-    -Dspring.config.location=classpath:/application-real.yml,classpath:/home/ubuntu/app/kiwi/application-real1-db.properties,/home/ubuntu/app/kiwi/application-real-db.properties \
+    -Dspring.config.location=classpath:/application-real.yml,classpath:/home/ubuntu/app/kiwi/application-real1.properties,/home/ubuntu/app/kiwi/application-real-db.properties \
     $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
