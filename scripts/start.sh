@@ -5,7 +5,7 @@ ABSDIR=$(dirname $ABSPATH)
 source ${ABSDIR}/profile.sh
 
 REPOSITORY=/home/ubuntu/app/kiwi/step3
-PROJECT_NAME=freelec-springboot2-webservice
+PROJECT_NAME=kiwi
 
 echo "> Build 파일 복사"
 echo "> cp $REPOSITORY/zip/*.jar $REPOSITORY/"
@@ -28,5 +28,4 @@ IDLE_PROFILE=$(find_idle_profile)
 echo "> $JAR_NAME 를 profile=$IDLE_PROFILE 로 실행합니다."
 nohup java -jar \
     -Dspring.config.location=classpath:/application-real.yml,classpath:/home/ubuntu/app/kiwi/application-$IDLE_PROFILE.yml,/home/ubuntu/app/kiwi/application-real-db.properties \
-    -Dspring.profiles.active=$IDLE_PROFILE \
     $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
