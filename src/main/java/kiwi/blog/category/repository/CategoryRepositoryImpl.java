@@ -42,9 +42,9 @@ public class CategoryRepositoryImpl extends QuerydslRepositorySupport implements
     private JPQLQuery<Category> selectCategoryJPQLQuery(CategoriesRequest categoriesRequest) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
-       //if (categoriesRequest.getOnlyParent()) {
+       if (categoriesRequest.getOnlyParent()) {
             booleanBuilder.and(qCategory.parentCategory.isNull());
-        //}
+        }
 
         return from(qCategory).where(booleanBuilder);
     }

@@ -14,10 +14,10 @@ public class CommonRequest {
     private String order;
 
     @ApiModelProperty(value = "조회결과 시작위치", position = 50)
-    private Long offset;
+    private Long offset = 1L;
 
     @ApiModelProperty(value = "조회결과 최대건수", position = 60)
-    private Long limit;
+    private Long limit = 10L;
 
     @ApiModelProperty(value = "상품 등록일 검색 시작일", position = 70)
     private String startDate;

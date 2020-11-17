@@ -55,13 +55,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().disable();
 
-        /*
-        .authorizeRequests().anyRequest().authenticated() 는 모든 요청에 대해서 인증을 받게 하고
-        .formLogin() // 폼 로그인을 쓰는데
-        .loginPage("/login") // 사용자가 만든 login 페이지를 쓰게하고
-        .permitAll(); // 이 페이지는 모든 사용자가 접근 가능하게 설정한다.
-         */
-
         http
                 .authorizeRequests()
                 .anyRequest().authenticated()
@@ -69,13 +62,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .formLogin()
                 .loginPage("/profile")
                 .permitAll();
-/*
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, ROOT_PATTERN).access("#oauth2.hasScope('read')")
-                .antMatchers(HttpMethod.POST, ROOT_PATTERN).access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PATCH, ROOT_PATTERN).access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.PUT, ROOT_PATTERN).access("#oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.DELETE, ROOT_PATTERN).access("#oauth2.hasScope('write')");*/
+
     }
 
     @Override
