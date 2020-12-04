@@ -56,10 +56,10 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
     public boolean supports(Class<?> aClass) {
         return FilterInvocation.class.isAssignableFrom(aClass);
     }
-/*
+
     public void reload() {
 
-        LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadedMap = securityResourceService.getResourceList();
+        LinkedHashMap<RequestMatcher, List<ConfigAttribute>> reloadedMap = resourceService.getResourceList();
         Iterator<Map.Entry<RequestMatcher, List<ConfigAttribute>>> iterator = reloadedMap.entrySet().iterator();
 
         requestMap.clear();
@@ -68,5 +68,5 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
             Map.Entry<RequestMatcher, List<ConfigAttribute>> entry = iterator.next();
             requestMap.put(entry.getKey(), entry.getValue());
         }
-    }*/
+    }
 }

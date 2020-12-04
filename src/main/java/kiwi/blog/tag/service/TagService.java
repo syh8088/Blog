@@ -10,6 +10,7 @@ import kiwi.blog.tag.model.request.TagRequest;
 import kiwi.blog.tag.model.response.TagResponse;
 import kiwi.blog.tag.model.response.TagsResponse;
 import kiwi.blog.tag.repository.TagRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,16 +19,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class TagService {
 
     private final TagRepository tagRepository;
     private final CacheService cacheService;
-
-    @Autowired
-    public TagService(TagRepository tagRepository, CacheService cacheService) {
-        this.tagRepository = tagRepository;
-        this.cacheService = cacheService;
-    }
 
     public TagsResponse getTags() {
         String cachedTags = cacheService.get(CacheName.Tags, SystemConstants.TAGS_CACHE_KEY);

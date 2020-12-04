@@ -9,6 +9,7 @@ import kiwi.blog.category.model.response.CategoryResponse;
 import kiwi.blog.category.repository.CategoryRepository;
 import kiwi.blog.common.utils.BeanUtils;
 import kiwi.blog.post.service.PostService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,17 +20,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
     @Autowired
     private PostService postService;
-
-    @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
 
     public CategoriesResponse getCategories(CategoriesRequest categoriesRequest) {
 

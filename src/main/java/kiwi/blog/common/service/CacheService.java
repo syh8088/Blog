@@ -2,20 +2,19 @@ package kiwi.blog.common.service;
 
 import kiwi.blog.common.model.enums.CacheName;
 import kiwi.blog.common.utils.JacksonUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class CacheService {
 
     private final CacheManager cacheManager;
-
-    @Autowired
-    public CacheService(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
 
     public String get(CacheName cacheName, String key) {
         Cache cache = cacheManager.getCache(cacheName.name());

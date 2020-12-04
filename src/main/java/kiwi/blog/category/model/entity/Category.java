@@ -20,7 +20,7 @@ public class Category extends Common {
 
     private long displayOrder;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_no")
     private Category parentCategory;
 

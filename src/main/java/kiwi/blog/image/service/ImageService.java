@@ -3,6 +3,7 @@ package kiwi.blog.image.service;
 import kiwi.blog.image.controller.ImageController;
 import kiwi.blog.image.model.entity.Image;
 import kiwi.blog.image.repository.ImageRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ImageService {
 
   @Value("${environments.server-url}")
@@ -22,12 +25,7 @@ public class ImageService {
   @Value("${server.port}")
   private String serverPort;
 
-  private ImageRepository imageRepository;
-
-  @Autowired
-  public ImageService(ImageRepository imageRepository) {
-    this.imageRepository = imageRepository;
-  }
+  private final ImageRepository imageRepository;
 
   public Image getImage(long imageNo) {
     return imageRepository.findById(imageNo).get();
@@ -36,16 +34,16 @@ public class ImageService {
   @Transactional
   public String saveImage(MultipartFile multipartFile) {
 
-    Image image;
+      Image image;
 
-    try {
-      image = new Image(Objects.requireNonNull(multipartFile.getOriginalFilename()), multipartFile.getContentType(), multipartFile.getBytes());
+      try {
+        image = new Image(Objects.requireNonNull(multipartFile.getOriginalFilename()), multipartFile.getContentType(), multipartFile.getBytes());
 
-      return serverUrl + ":" + serverPort + ImageController.IMAGE_API_PREFIX + "/" + imageRepository.save(image).getImageNo();
-    } catch (IOException ignored) {
+        return serverUrl + ":" + serverPort + ImageController.IMAGE_API_PREFIX + "/" + imageRepository.save(image).getImageNo();
+      } catch (IOException ignored) {
 
-    }
-    return Strings.EMPTY;
+      }
+      return Strings.EMPTY;
   }
 
 }
