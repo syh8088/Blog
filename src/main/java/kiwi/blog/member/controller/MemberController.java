@@ -4,7 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kiwi.blog.member.model.request.SaveMemberRequest;
 import kiwi.blog.member.service.MemberService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,15 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = "Member", description = "회원")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("members")
 public class MemberController {
 
     private final MemberService memberService;
-
-    @Autowired
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
-    }
 
     @PostMapping()
     @ApiOperation(value = "회원 저장", notes = "회원을 저장합니다")

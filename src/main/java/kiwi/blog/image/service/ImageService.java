@@ -5,7 +5,6 @@ import kiwi.blog.image.model.entity.Image;
 import kiwi.blog.image.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class ImageService {
 
@@ -27,11 +26,6 @@ public class ImageService {
 
   private final ImageRepository imageRepository;
 
-  public Image getImage(long imageNo) {
-    return imageRepository.findById(imageNo).get();
-  }
-
-  @Transactional
   public String saveImage(MultipartFile multipartFile) {
 
       Image image;

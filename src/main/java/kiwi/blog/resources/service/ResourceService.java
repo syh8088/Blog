@@ -2,26 +2,24 @@ package kiwi.blog.resources.service;
 
 import kiwi.blog.resources.model.entity.Resource;
 import kiwi.blog.resources.repository.ResourceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class ResourceService {
 
     private final ResourceRepository resourceRepository;
-
-    @Autowired
-    public ResourceService(ResourceRepository resourceRepository) {
-        this.resourceRepository = resourceRepository;
-    }
 
     public LinkedHashMap<RequestMatcher, List<ConfigAttribute>> getResourceList() {
 
