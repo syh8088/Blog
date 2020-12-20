@@ -36,7 +36,8 @@ public class CategoryController {
             //@LoginUser Object object,
             @ModelAttribute CategoriesRequest categoriesRequest
 
-            , @AuthenticationPrincipal OAuth2Authentication oAuth2Authentication
+           // , @AuthenticationPrincipal OAuth2Authentication oAuth2Authentication
+            , @LoginUser JwtUserRequest jwtUserRequest
 
     ) throws IOException {
 
