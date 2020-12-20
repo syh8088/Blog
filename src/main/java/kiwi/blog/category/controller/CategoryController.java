@@ -8,8 +8,15 @@ import kiwi.blog.category.model.response.CategoriesResponse;
 import kiwi.blog.category.model.response.CategoryResponse;
 import kiwi.blog.category.service.CategoryService;
 import kiwi.blog.category.service.query.CategoryQueryService;
+import kiwi.blog.common.annotation.LoginUser;
+import kiwi.blog.common.config.authentication.AppUserPrincipal;
+import kiwi.blog.common.config.authentication.JwtTokenProvider;
+import kiwi.blog.common.model.request.JwtUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -22,14 +29,18 @@ public class CategoryController {
 
     private final CategoryService categoryService;
     private final CategoryQueryService categoryQueryService;
-    //private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public ResponseEntity<CategoriesResponse> getCategories(@ModelAttribute CategoriesRequest categoriesRequest
-         //  , @AuthenticationPrincipal OAuth2Authentication auth
+    public ResponseEntity<CategoriesResponse> getCategories(
+            //@LoginUser Object object,
+            @ModelAttribute CategoriesRequest categoriesRequest
+
+            , @AuthenticationPrincipal OAuth2Authentication oAuth2Authentication
+
     ) throws IOException {
 
-        //HashMap jwtMap = jwtTokenProvider.getJwtTokenByClientCredentialForUser(auth);
+        //JwtUserRequest jwtUserRequest = jwtTokenProvider.getJwtTokenByClientCredentialForUser(auth);
 
         CategoriesResponse response = categoryQueryService.getCategories(categoriesRequest);
 

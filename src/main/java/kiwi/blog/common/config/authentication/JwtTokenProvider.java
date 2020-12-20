@@ -1,11 +1,13 @@
 package kiwi.blog.common.config.authentication;
 
 import io.jsonwebtoken.*;
+import kiwi.blog.common.model.request.JwtUserRequest;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.jwt.Jwt;
 import org.springframework.security.jwt.JwtHelper;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -14,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
 
 @Component
 public class JwtTokenProvider {
@@ -27,10 +28,10 @@ public class JwtTokenProvider {
     @Value("${app.oauth.jwt.expirationInMs}")
     private int jwtExpirationInMs;
 
-    public HashMap getJwtTokenByClientCredentialForUser(OAuth2Authentication auth) throws IOException {
+    public JwtUserRequest getJwtTokenByClientCredentialForUser(OAuth2Authentication auth) throws IOException {
         Jwt jwt = JwtHelper.decode(((OAuth2AuthenticationDetails) auth.getDetails()).getTokenValue());
         String jwtClaims = jwt.getClaims();
-        return new ObjectMapper().readValue(jwtClaims, HashMap.class);
+        return new ObjectMapper().readValue(jwtClaims, JwtUserRequest.class);
     }
 
     public String generateToken(Authentication authentication) {
